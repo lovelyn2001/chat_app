@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "801941291697",
+    "project_id": "chat-app-2a8c2",
+    "storage_bucket": "chat-app-2a8c2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801941291697:android:3804b30af4374f8f801890",
+        "android_client_info": {
+          "package_name": "com.lovelyn.chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAZc0d5LRJfKxN2Rm_4SfpCFyQ92mHkVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

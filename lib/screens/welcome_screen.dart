@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:chat_app/components/round_button.dart';
+import 'package:typewritertext/typewritertext.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -21,36 +23,33 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('images/logo.png', height: 60.0),
-                Text(
+                Hero(
+                  tag: 'logo',
+                  child: Image.asset('images/logo.png', height: 60.0),
+                ),
+                TypeWriter.text(
                   'Flash Chat',
                   style: Theme.of(context).textTheme.headlineLarge,
+                  duration: const Duration(milliseconds: 500),
+                  repeat: true,
                 ),
               ],
             ),
             SizedBox(height: 48.0),
-            ElevatedButton(
+            RoundButton(
+              backgroundColor: Theme.of(context).primaryColor,
               onPressed: () {
                 Navigator.pushNamed(context, '/login');
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor,
-                foregroundColor: Colors.white,
-                padding: EdgeInsets.fromLTRB(0, 16.0, 0, 16.0),
-              ),
-              child: Text('Login'),
+              text: 'Login',
             ),
             SizedBox(height: 16.0),
-            ElevatedButton(
+            RoundButton(
+              backgroundColor: Theme.of(context).hintColor,
               onPressed: () {
                 Navigator.pushNamed(context, '/register');
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).hintColor,
-                foregroundColor: Colors.white,
-                padding: EdgeInsets.fromLTRB(0, 16.0, 0, 16.0),
-              ),
-              child: Text('Register'),
+              text: 'Register',
             ),
           ],
         ),
