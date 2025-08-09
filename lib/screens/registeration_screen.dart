@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:chat_app/components/round_button.dart';
 import 'package:chat_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chat_app/screens/chat_screen.dart';
 
 class RegisterationScreen extends StatefulWidget {
   const RegisterationScreen({super.key});
@@ -13,7 +14,6 @@ class RegisterationScreen extends StatefulWidget {
 class _RegisterationScreenState extends State<RegisterationScreen> {
   String email = '';
   String password = '';
-  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +33,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
             TextField(
               keyboardType: TextInputType.emailAddress,
               textAlign: TextAlign.center,
-              onSubmitted: (value) {
+              onChanged: (value) {
                 email = value;
               },
               decoration: textFieldDecoration,
@@ -42,8 +42,8 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
             TextField(
               obscureText: true,
               textAlign: TextAlign.center,
-              onSubmitted: (value) {
-                password = password;
+              onChanged: (value) {
+                password = value;
               },
               decoration: textFieldDecoration.copyWith(
                 hintText: 'Enter your password',
@@ -56,12 +56,19 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                 backgroundColor: Theme.of(context).hintColor,
                 onPressed: () async {
                   try {
-                    final newUser = await _auth.createUserWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                    );
-                    if (newUser != null) {
+                    final credential = await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                          email: email,
+                          password: password,
+                        );
+                    if (credential.user != null) {
                       Navigator.pushNamed(context, '/chat');
+                    }
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'weak-password') {
+                      print('The password provided is too weak.');
+                    } else if (e.code == 'email-already-in-use') {
+                      print('The account already exists for that email.');
                     }
                   } catch (e) {
                     print(e);

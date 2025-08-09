@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/constants.dart';
 
@@ -9,6 +10,23 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  String? email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUserDetails();
+  }
+
+  void getCurrentUserDetails() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Name, email address, and profile photo URL
+      email = user.email;
+    }
+    print('current user email is: $email');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
