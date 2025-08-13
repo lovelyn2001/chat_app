@@ -63,11 +63,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       showSpinner = true;
                     });
                     try {
-                      final credential = await FirebaseAuth.instance
-                          .signInWithEmailAndPassword(
-                            email: email,
-                            password: password,
-                          );
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: email,
+                        password: password,
+                      );
                       Navigator.pushNamed(context, '/chat');
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'user-not-found') {

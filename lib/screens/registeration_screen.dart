@@ -65,7 +65,7 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                     });
 
                     try {
-                      final credential = await FirebaseAuth.instance
+                      await FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
                             email: email,
                             password: password,
