@@ -27,9 +27,11 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Hero(
-                tag: 'logo',
-                child: Image.asset('images/logo.png', height: 200.0),
+              Flexible(
+                child: Hero(
+                  tag: 'logo',
+                  child: Image.asset('images/logo.png', height: 200.0),
+                ),
               ),
 
               SizedBox(height: 48.0),
