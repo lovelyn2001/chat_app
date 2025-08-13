@@ -53,35 +53,24 @@ class _ChatScreenState extends State<ChatScreen> {
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: db.collection("chatMessages").snapshots(),
-                builder:
-                    (
-                      BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot,
-                    ) {
-                      if (snapshot.hasError) {
-                        return const Center(
-                          child: Text('Something went wrong'),
-                        );
-                      }
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: Text('Loading....'));
+                  }
 
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: Text("Loading..."));
-                      }
+                  final messages = snapshot.data!.docs;
 
-                      final messages = snapshot.data!.docs;
-
-                      return ListView.builder(
-                        itemCount: messages.length,
-                        itemBuilder: (context, index) {
-                          Map<String, dynamic> data =
-                              messages[index].data()! as Map<String, dynamic>;
-                          return ListTile(
-                            title: Text(data['message'] ?? ''),
-                            subtitle: Text(data['sender'] ?? ''),
-                          );
-                        },
+                  return ListView.builder(
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      messages[index].data() as Map<String, dynamic>;
+                      return ListTile(
+                        title: Text(messages[index]['message'] ?? ''),
+                        subtitle: Text(messages[index]['sender'] ?? ''),
                       );
                     },
+                  );
+                },
               ),
             ),
 

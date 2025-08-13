@@ -61,27 +61,39 @@ class _RegisterationScreenState extends State<RegisterationScreen> {
                     setState(() {
                       showSpinner = true;
                     });
+
                     try {
                       final credential = await FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
                             email: email,
                             password: password,
                           );
+
+                      // If registration is successful:
+                      setState(() {
+                        showSpinner = false;
+                      });
+                      Navigator.pushNamed(context, '/chat');
                     } on FirebaseAuthException catch (e) {
+                      setState(() {
+                        showSpinner = false;
+                      });
+
                       if (e.code == 'weak-password') {
                         print('The password provided is too weak.');
                       } else if (e.code == 'email-already-in-use') {
                         print('The account already exists for that email.');
                       } else {
-                        setState(() {
-                          showSpinner = false;
-                        });
-                        Navigator.pushNamed(context, '/chat');
+                        print('Error: ${e.message}');
                       }
                     } catch (e) {
+                      setState(() {
+                        showSpinner = false;
+                      });
                       print(e);
                     }
                   },
+
                   text: 'Register',
                 ),
               ),
